@@ -1,3 +1,6 @@
+// Janan
+// Basklass för bibliotekets objekt
+
 package com.example;
 
 public abstract class LibraryItem {

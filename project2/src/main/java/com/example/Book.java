@@ -1,3 +1,6 @@
+// Janan
+// Klass för böckerna
+
 package com.example;
 
 public class Book extends LibraryItem {
@@ -6,8 +9,7 @@ public class Book extends LibraryItem {
     private String genre;
     private int pages;
 
-    public Book(String id, String title, boolean isAvailable,
-                String author, String genre, int pages) {
+    public Book(String id, String title, boolean isAvailable,String author, String genre, int pages) {
 
         super(id, title, isAvailable);
 
@@ -16,20 +18,24 @@ public class Book extends LibraryItem {
         this.pages = pages;
     }
 
-    public String getAuthor() {
+    public String getAuthor() 
+    {
         return author;
     }
 
-    public String getGenre() {
+    public String getGenre() 
+    {
         return genre;
     }
 
-    public int getPages() {
+    public int getPages() 
+    {
         return pages;
     }
 
     @Override
-    public String getInfo() {
+    public String getInfo() 
+    {
         return getTitle() + " - " + author;
     }
     
