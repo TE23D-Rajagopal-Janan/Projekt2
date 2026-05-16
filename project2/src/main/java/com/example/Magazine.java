@@ -11,11 +11,15 @@ public class Magazine extends LibraryItem{
 
     public Magazine(String id, String title, boolean isAvailable,int issueNumber, String category, int publishedYear) {
 
-        super(id, title, isAvailable);
+        super(id, title, isAvailable);                     // konstruktor för manuelt tilägg av Magazine 
 
         this.issueNumber = issueNumber;
         this.category = category;
         this.publishedYear = publishedYear;
+    }
+
+    public Magazine() {
+        super("", "", true);  //  konstruktor som är tom för gason, så gason kan läsa in dem 
     }
 
     public int getIssueNumber() 

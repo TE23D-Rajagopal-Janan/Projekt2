@@ -11,11 +11,15 @@ public class Book extends LibraryItem {
 
     public Book(String id, String title, boolean isAvailable,String author, String genre, int pages) {
 
-        super(id, title, isAvailable);
+        super(id, title, isAvailable);            // konstruktor för när vi manuelt skriver in en bok
 
         this.author = author;
         this.genre = genre;
         this.pages = pages;
+    }
+
+        public Book() {
+        super("", "", true);   // n annas konstruktor som är tom för gason, så gason kan läsa in dem e
     }
 
     public String getAuthor() 
