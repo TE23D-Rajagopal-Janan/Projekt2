@@ -40,7 +40,7 @@ public class Book extends LibraryItem {
     @Override
     public String getInfo() 
     {
-        return getTitle() + " - " + author;
+        return getTitle() + " , " + author + genre;
     }
     
 }

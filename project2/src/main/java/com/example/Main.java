@@ -15,10 +15,10 @@ import java.lang.reflect.Type;
 public class Main {
     public static void main(String[] args) {
 
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);  // skapar ett scanner objeckt som läser in användarens val från tangentbordet
 
-    ArrayList<Book> books = new ArrayList<>();
-    ArrayList<Magazine> magazines = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>(); 
+    ArrayList<Magazine> magazines = new ArrayList<>();   //// ArrayLists för Book och Magazine objekt
 
     boolean meny = true;
 
@@ -32,25 +32,25 @@ public class Main {
         System.out.println("6. Lägg till tidning");
         System.out.println("7. Avsluta");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = scanner.nextInt(); // läser in ett heltal från användaren.
+        scanner.nextLine();       // tar bort enter, så det ej buggas
         
         if (choice == 1) {
-            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/books").asString();
+            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/books").asString(); // programet skicakr en request till servern, och får tillbaka json data.  
             
-            String json = response.getBody();
+            String json = response.getBody();  
             Gson gson = new Gson();     // Skapa ett JSON objekt 
-            
-            Type bookListType = new TypeToken<ArrayList<Book>>(){}.getType();
 
-            books = gson.fromJson(json, bookListType);
+            Type bookListType = new TypeToken<ArrayList<Book>>(){}.getType(); // säger för Gson att JSON datat ska bli en lista med böcker
+
+            books = gson.fromJson(json, bookListType); //gör om json texten till riktiga Java-objekt.
 
             System.out.println("alla böcker hämtade");
             }
         
         else if (choice == 2) { 
             
-            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/magazines").asString();
+            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/magazines").asString(); // skickar request om att få magazines. 
             
             String json = response.getBody();
 
