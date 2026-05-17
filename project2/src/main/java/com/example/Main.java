@@ -17,12 +17,11 @@ public class Main {
 
     Scanner scanner = new Scanner(System.in);  // skapar ett scanner objeckt som läser in användarens val från tangentbordet
 
+    Library library = new Library();
+
     ArrayList<Book> books = new ArrayList<>(); 
     ArrayList<Magazine> magazines = new ArrayList<>();   // ArrayLists för Book och Magazine objekt
     
-    ArrayList<User> users = new ArrayList<>();              // Listor för users och suspended users
-    ArrayList<SuspendedUser> suspendedUsers = new ArrayList<>();
-
     boolean meny = true;
 
     while (meny) {
@@ -55,7 +54,7 @@ public class Main {
             books = gson.fromJson(json, bookListType); //gör om json texten till riktiga Java-objekt.
 
             System.out.println("alla böcker hämtade");
-            }
+        }
         
         else if (choice == 2) { 
             
@@ -70,7 +69,7 @@ public class Main {
             magazines = gson.fromJson(json, magazineListType);
 
             System.out.println("alla tidningar hämtade");
-    }
+        }
 
         else if (choice == 3) {
 
@@ -83,7 +82,7 @@ public class Main {
         else if (choice == 4) {
             for (Magazine magazine : magazines) {
                 System.out.println(magazine.getInfo());
-            }
+            } 
         }
 
         else if (choice == 5) {
@@ -105,7 +104,7 @@ public class Main {
             books.add(newBook);
 
             System.out.println("ny bok tillagd");
-            }
+        }
 
         else if (choice == 6) {
             System.out.print("Titel: ");
@@ -125,7 +124,7 @@ public class Main {
             
             magazines.add(newMagazine);
             System.out.println("Tidning tillagd!");
-            }
+        }
         else if (choice == 7) {
             HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/users").asString();
             
@@ -135,16 +134,53 @@ public class Main {
             
             Type userListType = new TypeToken<ArrayList<User>>(){}.getType();
             
-            users = gson.fromJson(json, userListType);
+            library.getUsers().addAll(gson.fromJson(json, userListType));   // ska lägga user i library       
             
             System.out.println("Hämtat alla användare");
-}
+        }
+        
+        else if (choice == 8) {
 
-            else if (choice == 11) {
+            HttpResponse<String> response = Unirest.get( "http://10.151.168.5:3111/suspendedUsers").asString();
+            
+            String json = response.getBody();
+            Gson gson = new Gson();
+            Type suspendedListType = new TypeToken<ArrayList<SuspendedUser>>(){}.getType();
 
-                meny = false;
+            library.getSuspendedUsers().addAll(gson.fromJson(json, suspendedListType));
+            
+            System.out.println("avstängda användare hämtade");
+        }
+        else if (choice == 9) {
 
-                System.out.println("Avslutar...");
+            for (User user : library.getUsers()){
+                System.out.println(user);
+            }
+        }
+        else if (choice == 10) {
+            
+            for (SuspendedUser suspendedUser :library.getSuspendedUsers())
+                System.out.println(suspendedUser);
+            }
+            
+        else if (choice == 11) {
+            System.out.print("Skriv email: ");
+
+            String email = scanner.nextLine();
+
+            User foundUser = library.findUserByEmail(email);
+            
+            if (foundUser != null) {
+                System.out.println("Användare hittad:");
+                System.out.println(foundUser);
+            }
+            else {
+                System.out.println("Ingen användare hittades");
+            }
+        }
+        else if (choice == 12) {
+            meny = false;
+            System.out.println("Avslutar...");
             }
         }
     }
