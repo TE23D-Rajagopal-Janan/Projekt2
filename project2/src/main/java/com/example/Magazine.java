@@ -40,6 +40,6 @@ public class Magazine extends LibraryItem{
     @Override
     public String getInfo() 
     {
-        return getTitle() + " - " + category;
+        return getTitle() + " , " + category;
     }
 }

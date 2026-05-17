@@ -18,7 +18,10 @@ public class Main {
     Scanner scanner = new Scanner(System.in);  // skapar ett scanner objeckt som läser in användarens val från tangentbordet
 
     ArrayList<Book> books = new ArrayList<>(); 
-    ArrayList<Magazine> magazines = new ArrayList<>();   //// ArrayLists för Book och Magazine objekt
+    ArrayList<Magazine> magazines = new ArrayList<>();   // ArrayLists för Book och Magazine objekt
+    
+    ArrayList<User> users = new ArrayList<>();              // Listor för users och suspended users
+    ArrayList<SuspendedUser> suspendedUsers = new ArrayList<>();
 
     boolean meny = true;
 
@@ -30,7 +33,13 @@ public class Main {
         System.out.println("4. Visa tidningar");
         System.out.println("5. Lägg till bok");
         System.out.println("6. Lägg till tidning");
-        System.out.println("7. Avsluta");
+       
+        System.out.println("7. Hämta användare");
+        System.out.println("8. Hämta avstängda användare");
+        System.out.println("9. Visa användare");
+        System.out.println("10. Visa avstängda användare");
+
+        System.out.println("11. Avsluta");
 
         int choice = scanner.nextInt(); // läser in ett heltal från användaren.
         scanner.nextLine();       // tar bort enter, så det ej buggas
@@ -117,8 +126,21 @@ public class Main {
             magazines.add(newMagazine);
             System.out.println("Tidning tillagd!");
             }
+        else if (choice == 7) {
+            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/users").asString();
+            
+            String json = response.getBody();
+            
+            Gson gson = new Gson();
+            
+            Type userListType = new TypeToken<ArrayList<User>>(){}.getType();
+            
+            users = gson.fromJson(json, userListType);
+            
+            System.out.println("Hämtat alla användare");
+}
 
-            else if (choice == 7) {
+            else if (choice == 11) {
 
                 meny = false;
 
