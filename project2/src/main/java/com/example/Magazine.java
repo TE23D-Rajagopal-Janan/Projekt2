@@ -3,7 +3,7 @@
 
 package com.example;
 
-public class Magazine extends LibraryItem{
+public class Magazine extends LibraryItem implements Comparable<Magazine>{
 
     private int issueNumber;
     private String category;
@@ -41,5 +41,9 @@ public class Magazine extends LibraryItem{
     public String getInfo() 
     {
         return getTitle() + " , " + category;
+    }
+    @Override
+    public int compareTo(Magazine otherMagazine) {
+        return this.getTitle().compareToIgnoreCase(otherMagazine.getTitle());
     }
 }

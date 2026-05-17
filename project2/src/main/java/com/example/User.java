@@ -1,6 +1,6 @@
 package com.example;
 
-public class User {
+public class User implements Comparable<User> {
 
     private String id;
     private String name;
@@ -40,6 +40,13 @@ public class User {
     { this.email = email; }
 
     public String toString(){
-        return name + " , " + email;
+        return name + " ," + email;
     }
+    @Override
+    public int compareTo(User otherUser) {
+
+    return this.name.compareToIgnoreCase(
+            otherUser.name
+    );
+}
 }

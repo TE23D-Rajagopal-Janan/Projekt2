@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
+import java.util.Collections;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -32,16 +34,24 @@ public class Main {
         System.out.println("4. Visa tidningar");
         System.out.println("5. Lägg till bok");
         System.out.println("6. Lägg till tidning");
-       
+    
         System.out.println("7. Hämta användare");
         System.out.println("8. Hämta avstängda användare");
         System.out.println("9. Visa användare");
         System.out.println("10. Visa avstängda användare");
+        System.out.println("11. Hitta användare via email");
+        System.out.println("12. Ta bort bok");
+        System.out.println("13. Avsluta");
 
-        System.out.println("11. Avsluta");
-
-        int choice = scanner.nextInt(); // läser in ett heltal från användaren.
-        scanner.nextLine();       // tar bort enter, så det ej buggas
+        int choice = 0;
+        try {
+        choice = scanner.nextInt();
+        scanner.nextLine();
+    }
+    catch (Exception e) {
+        System.out.println("Fel input!");
+        scanner.nextLine();
+    }
         
         if (choice == 1) {
             HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/books").asString(); // programet skicakr en request till servern, och får tillbaka json data.  
@@ -73,6 +83,8 @@ public class Main {
 
         else if (choice == 3) {
 
+            Collections.sort(books);
+
             for (Book book : books) {
                 System.out.println(book.getInfo());
             }
@@ -80,6 +92,9 @@ public class Main {
 
 
         else if (choice == 4) {
+            
+            Collections.sort(magazines);
+
             for (Magazine magazine : magazines) {
                 System.out.println(magazine.getInfo());
             } 
@@ -102,8 +117,11 @@ public class Main {
             Book newBook = new Book("1",title,true,author,genre,pages);
             
             books.add(newBook);
-
-            System.out.println("ny bok tillagd");
+            Gson gson = new Gson();
+            String json = gson.toJson(newBook);
+            Unirest.post("http://10.151.168.5:3111/books").header("Content-Type","application/json").body(json).asString();
+            
+            System.out.println("Ny bok tillagd på servern");
         }
 
         else if (choice == 6) {
@@ -123,7 +141,13 @@ public class Main {
             Magazine newMagazine = new Magazine("1",title,true,issueNumber,category,year);
             
             magazines.add(newMagazine);
-            System.out.println("Tidning tillagd!");
+
+            Gson gson = new Gson();
+            String json = gson.toJson(newMagazine);
+
+            Unirest.post("http://10.151.168.5:3111/magazines").header("Content-Type","application/json").body(json).asString();
+            
+            System.out.println("Tidning tillagd på servern");
         }
         else if (choice == 7) {
             HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/users").asString();
@@ -152,15 +176,17 @@ public class Main {
             System.out.println("avstängda användare hämtade");
         }
         else if (choice == 9) {
+            Collections.sort(library.getUsers());
 
-            for (User user : library.getUsers()){
-                System.out.println(user);
-            }
-        }
+            for (User user:library.getUsers()) {
+            System.out.println(user);
+    }
+}
         else if (choice == 10) {
             
-            for (SuspendedUser suspendedUser :library.getSuspendedUsers())
-                System.out.println(suspendedUser);
+            for (SuspendedUser suspendedUser :library.getSuspendedUsers()){
+            System.out.println(suspendedUser);
+            }
             }
             
         else if (choice == 11) {
@@ -179,6 +205,14 @@ public class Main {
             }
         }
         else if (choice == 12) {
+            System.out.print("Skriv ID på bok:");
+            
+            String id = scanner.nextLine();
+            Unirest.delete("http://10.151.168.5:3111/books/"+ id).asString();
+            
+            System.out.println("Boken togs bort från servern");
+}
+        else if (choice == 13) {
             meny = false;
             System.out.println("Avslutar...");
             }

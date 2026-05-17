@@ -3,7 +3,7 @@
 
 package com.example;
 
-public class Book extends LibraryItem {
+public class Book extends LibraryItem implements Comparable<Book>{  // så att vi kan sortera 
     
     private String author;
     private String genre;
@@ -19,7 +19,7 @@ public class Book extends LibraryItem {
     }
 
         public Book() {
-        super("", "", true);   // n annas konstruktor som är tom för gason, så gason kan läsa in dem e
+        super("", "", true);   // en annas konstruktor som är tom för gason, så gason kan läsa in dem e
     }
 
     public String getAuthor() 
@@ -40,7 +40,11 @@ public class Book extends LibraryItem {
     @Override
     public String getInfo() 
     {
-        return getTitle() + " , " + author + genre;
+        return getTitle() + " , " + author + ", " + genre;
     }
+    @Override
+    public int compareTo(Book otherBook) {  // jämför två olika book objekt 
+    return this.getTitle().compareToIgnoreCase(otherBook.getTitle());  // Sorterar böcker alfabetiskt efter titel
+}
     
 }
