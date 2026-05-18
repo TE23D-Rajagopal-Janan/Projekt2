@@ -27,21 +27,24 @@ public class Main {
     boolean meny = true;
 
     while (meny) {
-        System.out.println("--- MENY ---");
+        System.out.println("\n--- MENY ---");
         System.out.println("1. Hämta böcker");
         System.out.println("2. Hämta tidningar");
         System.out.println("3. Visa böcker");
         System.out.println("4. Visa tidningar");
         System.out.println("5. Lägg till bok");
         System.out.println("6. Lägg till tidning");
-    
+
         System.out.println("7. Hämta användare");
         System.out.println("8. Hämta avstängda användare");
         System.out.println("9. Visa användare");
         System.out.println("10. Visa avstängda användare");
         System.out.println("11. Hitta användare via email");
         System.out.println("12. Ta bort bok");
-        System.out.println("13. Avsluta");
+        System.out.println("13. Lägg till avstängd användare");
+        System.out.println("14. Lägg till  användare");
+        System.out.println("15. Kontrollera om användare får låna");
+        System.out.println("16. Avsluta");
 
         int choice = 0;
         try {
@@ -165,7 +168,7 @@ public class Main {
         
         else if (choice == 8) {
 
-            HttpResponse<String> response = Unirest.get( "http://10.151.168.5:3111/suspendedUsers").asString();
+            HttpResponse<String> response = Unirest.get( "http://10.151.168.5:3111/suspended").asString();
             
             String json = response.getBody();
             Gson gson = new Gson();
@@ -211,8 +214,11 @@ public class Main {
             Unirest.delete("http://10.151.168.5:3111/books/"+ id).asString();
             
             System.out.println("Boken togs bort från servern");
-}
-        else if (choice == 13) {
+        }
+        else if (choice == 13){
+
+        }
+        else if (choice == 15) {
             meny = false;
             System.out.println("Avslutar...");
             }
