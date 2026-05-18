@@ -125,7 +125,7 @@ public class Main {
             Unirest.post("http://10.151.168.5:3111/books").header("Content-Type","application/json").body(json).asString();
             
             System.out.println("Ny bok tillagd på servern");
-        }
+        } 
 
         else if (choice == 6) {
             System.out.print("Titel: ");
@@ -216,8 +216,48 @@ public class Main {
             System.out.println("Boken togs bort från servern");
         }
         else if (choice == 13){
+            System.out.print("ID: ");
+            String id = scanner.nextLine();
+            
+            System.out.print("User ID: ");
+            String userId = scanner.nextLine();
+            
+            System.out.print("Reason: ");
+            String reason = scanner.nextLine();
+            
+            SuspendedUser suspendedUser = new SuspendedUser(id,userId,reason);
+            
+            library.getSuspendedUsers().add(suspendedUser);  // Lägger till lokal
+                
+            Gson gson = new Gson();
+
+            String json = gson.toJson(suspendedUser);            
+            Unirest.post("http://10.151.168.5:3111/suspended").header("Content-Type","application/json").body(json).asString();
+            
+            System.out.println("Avstängd användare tillagd");
 
         }
+        else if (choice == 14) {
+            System.out.print("ID: ");
+            String id = scanner.nextLine();
+            
+            System.out.print("Namn: ");
+            String name = scanner.nextLine();
+            
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
+            User newUser = new User(id,name,email);
+            
+            library.getUsers().add(newUser);
+            
+            Gson gson = new Gson();
+            
+            String json = gson.toJson(newUser);
+            
+            Unirest.post("http://10.151.168.5:3111/users").header("Content-Type","application/json").body(json).asString();
+            
+            System.out.println("användare är tillagd");
+}
         else if (choice == 15) {
             meny = false;
             System.out.println("Avslutar...");
