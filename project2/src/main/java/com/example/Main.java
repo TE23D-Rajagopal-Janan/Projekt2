@@ -27,7 +27,7 @@ public class Main {
     boolean meny = true;
 
     while (meny) {
-        System.out.println("\n--- MENY ---");
+        System.out.println("\n--- MENY ---");  
         System.out.println("1. Hämta böcker");
         System.out.println("2. Hämta tidningar");
         System.out.println("3. Visa böcker");
@@ -180,11 +180,10 @@ public class Main {
         }
         else if (choice == 9) {
             Collections.sort(library.getUsers());
-
             for (User user:library.getUsers()) {
-            System.out.println(user);
-    }
-}
+                System.out.println(user);
+            }
+        }
         else if (choice == 10) {
             
             for (SuspendedUser suspendedUser :library.getSuspendedUsers()){
@@ -257,11 +256,26 @@ public class Main {
             Unirest.post("http://10.151.168.5:3111/users").header("Content-Type","application/json").body(json).asString();
             
             System.out.println("användare är tillagd");
-}
+        }
         else if (choice == 15) {
+            System.out.print("Skriv user ID: ");
+
+            String userId =scanner.nextLine();
+            
+            boolean allowed = library.canBorrow(userId);
+            
+            if (allowed) {
+                System.out.println("Användaren får låna");
+            }
+            else {
+                System.out.println("Användaren är avstängd");
+            }
+        }
+        else if (choice == 16) {
             meny = false;
             System.out.println("Avslutar...");
             }
         }
+        scanner.close();
     }
 }
