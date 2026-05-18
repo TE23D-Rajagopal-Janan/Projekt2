@@ -13,7 +13,7 @@ public class Library {
 
 
     public ArrayList<User> getUsers() {
-        return users;
+        return users;                          // Getter metod för att komma åt listorna
     }
 
     public ArrayList<SuspendedUser>getSuspendedUsers() {

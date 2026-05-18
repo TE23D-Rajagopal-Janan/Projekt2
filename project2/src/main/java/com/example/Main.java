@@ -48,19 +48,20 @@ public class Main {
 
         int choice = 0;
         try {
-        choice = scanner.nextInt();
+        choice = scanner.nextInt();         // försöker hitta ett heltal 
         scanner.nextLine();
     }
-    catch (Exception e) {
+    catch (Exception e) {           // fångar felet som hindrar ifrån att programmet krashar 
         System.out.println("Fel input!");
         scanner.nextLine();
     }
         
         if (choice == 1) {
-            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/books").asString(); // programet skicakr en request till servern, och får tillbaka json data.  
+            HttpResponse<String> response = Unirest.get("http://10.151.168.5:3111/books").asString(); // programet skicakr en request till servern, och får tillbaka json data och vi får den i text.  
             
             String json = response.getBody();  
-            Gson gson = new Gson();     // Skapa ett JSON objekt 
+
+            Gson gson = new Gson();     // Skapa ett GSON objekt 
 
             Type bookListType = new TypeToken<ArrayList<Book>>(){}.getType(); // säger för Gson att JSON datat ska bli en lista med böcker
 
@@ -117,12 +118,12 @@ public class Main {
             int pages = scanner.nextInt();
             scanner.nextLine();
 
-            Book newBook = new Book("1",title,true,author,genre,pages);
+            Book newBook = new Book("1",title,true,author,genre,pages);   // skapar book objekt
             
-            books.add(newBook);
+            books.add(newBook);  // lägger till bok objekt till listan
             Gson gson = new Gson();
-            String json = gson.toJson(newBook);
-            Unirest.post("http://10.151.168.5:3111/books").header("Content-Type","application/json").body(json).asString();
+            String json = gson.toJson(newBook);  // gör om book objekt till json text
+            Unirest.post("http://10.151.168.5:3111/books").header("Content-Type","application/json").body(json).asString(); // berättar att vi skickar in data som json
             
             System.out.println("Ny bok tillagd på servern");
         } 
