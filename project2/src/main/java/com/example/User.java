@@ -43,7 +43,7 @@ public class User implements Comparable<User> {
         return name + " ," + email;
     }
     @Override
-    public int compareTo(User otherUser) {
+    public int compareTo(User otherUser) {  
 
     return this.name.compareToIgnoreCase(
             otherUser.name

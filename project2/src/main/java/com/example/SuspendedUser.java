@@ -13,7 +13,7 @@ public class SuspendedUser {
         this.reason = reason;
     }
 
-    public SuspendedUser() {     // konstruktor för gason
+    public SuspendedUser() {     // konstruktor för gson
     }
 
     public String getId() 
@@ -27,12 +27,12 @@ public class SuspendedUser {
     }
 
     public String getReason() 
-    {
+    {  
         return reason;
     }
 
     public String toString() {
 
-           return "User ID: " + userId + "| Reason: " + reason;
+           return "User ID: " + userId + ", Reason: " + reason;
     }
 }
